@@ -1,9 +1,16 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import useAuthStore from '@/store/useAuthStore'
 import styles from './Navbar.module.css'
 
 const Navbar = () => {
-    const { isAuthenticated, logout } = useAuthStore()
+    const { isAuthenticated, user, logout } = useAuthStore()
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        logout()
+        navigate('/')
+    }
 
     return (
         <header className={styles.header}>
@@ -40,9 +47,12 @@ const Navbar = () => {
                         >
                             Admin
                         </NavLink>
-                        <button className={styles.logoutBtn} onClick={logout}>
+                        <div className={styles.userMenu}>
+                            <span className={styles.userName}>👤 {user?.name}</span>
+                            <button className={styles.logoutBtn} onClick={handleLogout}>
                             Logout
-                        </button>
+                            </button>
+                        </div>
                     </>
                 ) : (
                     <NavLink

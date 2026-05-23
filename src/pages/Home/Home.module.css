@@ -1,0 +1,269 @@
+/* ── SHARED ── */
+.badge {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--color-secondary);
+    font-size: var(--font-size-sm);
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+.sectionHeader {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.sectionSubtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-md);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* ── HERO ── */
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    background: linear-gradient(135deg, #18181b 60%, #3f3f46 100%);
+}
+
+.heroContent {
+    max-width: 600px;
+}
+
+.heroTitle {
+    font-size: var(--font-size-3xl);
+    font-weight: 800;
+    color: var(--color-white);
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+}
+
+.heroSubtitle {
+    color: #a1a1aa;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+}
+
+.heroButtons {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.btnPrimary {
+    background: var(--color-white);
+    color: var(--color-primary);
+    padding: 12px 28px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.btnPrimary:hover {
+    opacity: 0.9;
+}
+
+.btnSecondary {
+    background: transparent;
+    color: var(--color-white);
+    padding: 12px 28px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid #52525b;
+    transition: border-color 0.2s;
+}
+
+.btnSecondary:hover {
+    border-color: #fff;
+}
+
+/* ── SERVICES ── */
+.services {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    background: var(--color-background);
+}
+
+.servicesGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.serviceCard {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    transition: box-shadow 0.2s;
+}
+
+.serviceCard:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.serviceIcon {
+    font-size: 2rem;
+}
+
+.serviceTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.serviceDescription {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    flex: 1;
+}
+
+.servicePrice {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* ── ABOUT ── */
+.about {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+    background: var(--color-white);
+}
+
+.aboutText {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-lg);
+}
+
+.aboutList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.aboutImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagePlaceholder {
+    width: 300px;
+    height: 300px;
+    background: var(--color-accent);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+}
+
+/* ── CONTACT ── */
+.contact {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    background: var(--color-background);
+}
+
+.contactGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.contactCard {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.contactIcon {
+    font-size: 2rem;
+}
+
+.contactCard h4 {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+}
+
+.contactCard p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+    .servicesGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contactGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: var(--spacing-xl) var(--spacing-md);
+        min-height: 70vh;
+    }
+
+    .heroTitle {
+        font-size: var(--font-size-2xl);
+    }
+
+    .services,
+    .about,
+    .contact {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .about {
+        grid-template-columns: 1fr;
+    }
+
+    .imagePlaceholder {
+        width: 200px;
+        height: 200px;
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .servicesGrid,
+    .contactGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .heroButtons {
+        flex-direction: column;
+    }
+}

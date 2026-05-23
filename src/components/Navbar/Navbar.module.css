@@ -56,6 +56,17 @@
     color: #fff;
 }
 
+.userMenu {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.userName {
+    color: #ccc;
+    font-size: var(--font-size-sm);
+}
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;

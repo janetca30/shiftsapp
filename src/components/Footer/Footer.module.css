@@ -1,0 +1,77 @@
+.footer {
+    background-color: #111;
+    color: #ccc;
+    padding: var(--spacing-lg) var(--spacing-lg) 0;
+    margin-top: auto;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid #333;
+}
+
+.brand p {
+    font-size: var(--font-size-sm);
+    margin-top: var(--spacing-sm);
+    color: #999;
+}
+
+.logo {
+    color: #fff;
+    font-size: var(--font-size-lg);
+}
+
+.links,
+.contact,
+.hours {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.links h4,
+.contact h4,
+.hours h4 {
+    color: #fff;
+    font-size: var(--font-size-md);
+    margin-bottom: 4px;
+}
+
+.links a {
+    color: #999;
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    transition: color 0.2s;
+}
+
+.links a:hover {
+    color: #fff;
+}
+
+.contact p,
+.hours p {
+    font-size: var(--font-size-sm);
+    color: #999;
+}
+
+.bottom {
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    font-size: var(--font-size-sm);
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}

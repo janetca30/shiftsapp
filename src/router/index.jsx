@@ -5,6 +5,7 @@ import Booking from '@pages/Booking/Booking.jsx'
 import Admin from '@pages/Admin/Admin.jsx'
 import Login from '@pages/Login/Login.jsx'
 import NotFound from '@pages/NotFound/NotFound.jsx'
+import ProtectedRoute from './ProtectedRoute.jsx'
 
 const router = createBrowserRouter([
     {
@@ -13,7 +14,12 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: 'booking', element: <Booking />},
-            { path: 'admin', element: <Admin />},
+            { path: 'admin', element: (
+                <ProtectedRoute>
+                    <Admin />
+                </ProtectedRoute>
+                )
+            },
             { path: 'login', element: <Login />},
         ]
     },

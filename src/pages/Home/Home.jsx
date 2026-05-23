@@ -1,10 +1,16 @@
+import Hero from './sections/Hero'
+import Services from './sections/Services'
+import About from './sections/About'
+import Contact from './sections/Contact'
 
 const Home = () => {
     return (
-        <div>
-            <h1>Home</h1>
-            <button>Click</button>
-        </div>
+        <>
+            <Hero />
+            <Services />
+            <About />
+            <Contact />
+        </>
     )
 }
 
