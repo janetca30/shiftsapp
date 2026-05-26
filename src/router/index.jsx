@@ -6,6 +6,7 @@ import Admin from '@pages/Admin/Admin.jsx'
 import Login from '@pages/Login/Login.jsx'
 import NotFound from '@pages/NotFound/NotFound.jsx'
 import ProtectedRoute from './ProtectedRoute.jsx'
+import Register from '@pages/Register/Register.jsx'
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
                 )
             },
             { path: 'login', element: <Login />},
+            { path: 'register', element: <Register />},
         ]
     },
     { path: '*', element: <NotFound /> }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import useAuthStore from '@/store/useAuthStore'
 import { authService } from '@/services/api'
 import styles from './Login.module.css'
@@ -75,7 +75,7 @@ const Login = () => {
                 </button>
 
                 <p className={styles.hint}>
-                    Admin: admin@barbershop.com / admin123
+                    Don't have an account? <Link to="/register" className={styles.link}>Sign up</Link>
                 </p>
             </div>
         </div>

@@ -90,7 +90,7 @@
     text-align: center;
 }
 
-.hint {
+.loginLink {
     text-align: center;
     font-size: var(--font-size-sm);
     color: var(--color-text-muted);
