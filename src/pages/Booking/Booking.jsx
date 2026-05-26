@@ -136,12 +136,16 @@ const Booking = () => {
                                 <div className={styles.guestFields}>
                                     <input
                                         className={styles.guestInput}
+                                        id='guestName'
+                                        name= 'guestName'
                                         placeholder="Your name *"
                                         value={guestInfo.name}
                                         onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
                                     />
                                     <input
                                         className={styles.guestInput}
+                                        id='guestPhone'
+                                        name= 'guestPhone'
                                         placeholder="Your phone *"
                                         value={guestInfo.phone}
                                         onChange={(e) => setGuestInfo({ ...guestInfo, phone: e.target.value })}

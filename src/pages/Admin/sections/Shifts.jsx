@@ -18,9 +18,10 @@ const Shifts = () => {
     }, [])
 
     const filtered = shifts.filter((shift) => {
+        const clientName = shift.client?.name || shift.guestInfo?.name || ''
         const matchSearch =
-            shift.client?.name.toLowerCase().includes(search.toLowerCase()) ||
-            shift.service?.some((s) => s.title.toLowerCase().includes(search.toLowerCase()))
+            clientName.toLowerCase().includes(search.toLowerCase()) ||
+            shift.services?.some((s) => s.title.toLowerCase().includes(search.toLowerCase()))
         const matchStatus = filterStatus === 'all' || shift.status === filterStatus
         const matchDate = filterDate === '' || shift.date === filterDate
         return matchSearch && matchStatus && matchDate
@@ -77,9 +78,12 @@ const Shifts = () => {
                 <thead>
                 <tr>
                     <th>Client</th>
-                    <th>Service</th>
+                    <th>Phone</th>
+                    <th>Services</th>
+                    <th>Stylist</th>
                     <th>Date</th>
                     <th>Time</th>
+                    <th>Total</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -92,8 +96,9 @@ const Shifts = () => {
                 ) : (
                     filtered.map((shift) => (
                         <tr key={shift._id}>
-                            <td>{shift.client?.name}</td>
-                            <td>{shift.service?.map((s) => s.title).join(', ')}</td>
+                            <td>{shift.client?.name || shift.guestInfo?.name || 'Guest'}</td>
+                            <td>{shift.client?.phone || shift.guestInfo?.phone || '—'}</td>
+                            <td>{shift.services?.map((s) => s.title).join(', ')}</td>
                             <td>{shift.stylist?.name}</td>
                             <td>{shift.date}</td>
                             <td>{shift.time}</td>

@@ -11,6 +11,8 @@ const request = async (endpoint, options = {}) => {
         ...options,
     })
 
+    if (res.status === 204) return null
+
     const data = await res.json()
 
     if (!res.ok) throw new Error(data.message || 'Something went wrong')
@@ -33,7 +35,7 @@ export const stylistService = {
 }
 
 export const shiftService = {
-    getAll: () => request('/shifts'),
+    getAll: () => request(`/shifts?t=${Date.now()}`),
     getMy: () => request('/shifts/my'),
     create: (body) => request('/shifts', { method: 'POST', body: JSON.stringify(body) }),
     createGuest: (body) => request('/shifts/guest', { method: 'POST', body: JSON.stringify(body) }),
