@@ -1,39 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from '../Admin.module.css'
 import sharedStyles from '@/styles/shared.module.css'
-
-const initialStylists = [
-    {
-        id: 1,
-        name: 'Alex Johnson',
-        email: 'alex@barbershop.com',
-        phone: '+1 234 567 001',
-        specialties: ['Haircut', 'Beard Trim', 'Shave'],
-        status: 'active',
-        shifts: 124,
-        rating: 4.9,
-    },
-    {
-        id: 2,
-        name: 'Maria Garcia',
-        email: 'maria@barbershop.com',
-        phone: '+1 234 567 002',
-        specialties: ['Hair Color', 'Hair Treatment', 'Haircut'],
-        status: 'active',
-        shifts: 98,
-        rating: 4.8,
-    },
-    {
-        id: 3,
-        name: 'Chris Lee',
-        email: 'chris@barbershop.com',
-        phone: '+1 234 567 003',
-        specialties: ['Shave', 'Beard Trim'],
-        status: 'inactive',
-        shifts: 45,
-        rating: 4.6,
-    },
-]
+import { stylistService } from '@/services/api'
 
 const allSpecialties = ['Haircut', 'Shave', 'Beard Trim', 'Hair Treatment', 'Hair Color', 'Hair Wash']
 
@@ -46,10 +14,20 @@ const emptyForm = {
 }
 
 const Stylists = () => {
-    const [stylists, setStylists] = useState(initialStylists)
+    const [stylists, setStylists] = useState([])
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState(null)
     const [form, setForm] = useState(emptyForm)
+
+    const fetchStylists = async () => {
+        const data = await stylistService.getAll()
+        setStylists(data)
+    }
+
+    useEffect(() => {
+        fetchStylists()
+            .catch((err) => console.error(err))
+    }, [])
 
     const handleOpen = (stylist = null) => {
         if (stylist) {
@@ -60,7 +38,7 @@ const Stylists = () => {
                 specialties: stylist.specialties,
                 status: stylist.status,
             })
-            setEditingId(stylist.id)
+            setEditingId(stylist._id)
         } else {
             setForm(emptyForm)
             setEditingId(null)
@@ -78,39 +56,36 @@ const Stylists = () => {
         const updated = form.specialties.includes(specialty)
             ? form.specialties.filter((s) => s !== specialty)
             : [...form.specialties, specialty]
-
-        setForm({...form, specialties: updated})
-
-
+        setForm({ ...form, specialties: updated })
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!form.name || !form.email) return
-
-        if (editingId) {
-            setStylists((prev) =>
-                prev.map((s) => (s.id === editingId ? { ...s, ...form } : s))
-            )
-        } else {
-            setStylists((prev) => [
-                ...prev,
-                { ...form, id: Date.now(), shifts: 0, rating: 0 },
-            ])
+        try {
+            if (editingId) {
+                const updated = await stylistService.update(editingId, form)
+                setStylists((prev) => prev.map((s) => s._id === editingId ? updated : s))
+            } else {
+                const created = await stylistService.create(form)
+                setStylists((prev) => [...prev, created])
+            }
+            handleClose()
+        } catch (error) {
+            console.error('Error saving stylist:', error)
         }
-        handleClose()
     }
 
-    const handleToggleStatus = (id) => {
-        setStylists((prev) =>
-            prev.map((s) =>
-                s.id === id
-                    ? { ...s, status: s.status === 'active' ? 'inactive' : 'active' }
-                    : s
-            )
-        )
+    const handleToggleStatus = async (stylist) => {
+        const newStatus = stylist.status === 'active' ? 'inactive' : 'active'
+        try {
+            const updated = await stylistService.update(stylist._id, { ...stylist, status: newStatus })
+            setStylists((prev) => prev.map((s) => s._id === stylist._id ? updated : s))
+        } catch (error) {
+            console.error('Error updating status:', error)
+        }
     }
 
-    return (
+     return (
         <div className={styles.stylistsWrapper}>
             <div className={styles.stylistsHeader}>
                 <p className={styles.resultsCount}>{stylists.length} stylists</p>
@@ -121,7 +96,7 @@ const Stylists = () => {
 
             <div className={styles.stylistsGrid}>
                 {stylists.map((stylist) => (
-                    <div key={stylist.id} className={styles.stylistCard}>
+                    <div key={stylist._id} className={styles.stylistCard}>
                         <div className={styles.stylistCardHeader}>
                             <div className={styles.stylistAvatar}>
                                 {stylist.name.charAt(0)}
@@ -155,7 +130,7 @@ const Stylists = () => {
                             </button>
                             <button
                                 className={stylist.status === 'active' ? styles.cancelBtn : styles.completeBtn}
-                                onClick={() => handleToggleStatus(stylist.id)}
+                                onClick={() => handleToggleStatus(stylist)}
                             >
                                 {stylist.status === 'active' ? 'Deactivate' : 'Activate'}
                             </button>
@@ -164,7 +139,6 @@ const Stylists = () => {
                 ))}
             </div>
 
-            {/* Modal */}
             {showForm && (
                 <div className={styles.modalOverlay} onClick={handleClose}>
                     <div className={styles.modal} onClick={(e) => e.stopPropagation()}>

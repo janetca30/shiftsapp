@@ -8,6 +8,9 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{js,jsx}'],
+    rules: {
+      'react-hooks/set-state-in-effect': 'off',
+    },
     extends: [
       js.configs.recommended,
       reactHooks.configs.flat.recommended,

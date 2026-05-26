@@ -109,6 +109,8 @@
 .selectedCard {
     border-color: var(--color-primary);
     background: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.15);
+    transform: translateY(-2px);
 }
 
 .serviceIcon {
@@ -473,6 +475,118 @@
 /* ── CONTENT ── */
 .content {
     margin-top: var(--spacing-xl);
+}
+
+/* ── SUCCESS ── */
+.successWrapper {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.successIcon {
+    font-size: 4rem;
+}
+
+.successTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+}
+
+.successSubtitle {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-md);
+}
+
+.successButtons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.successHomeBtn {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: 12px 28px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.successHomeBtn:hover {
+    opacity: 0.85;
+}
+
+.successNewBtn {
+    background: transparent;
+    color: var(--color-primary);
+    padding: 12px 28px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    transition: border-color 0.2s;
+}
+
+.successNewBtn:hover {
+    border-color: var(--color-primary);
+}
+
+/* ── LOGIN BANNER ── */
+.loginBanner {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: var(--border-radius);
+    padding: 10px 16px;
+    margin-top: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    color: #0369a1;
+}
+
+.loginLink {
+    font-weight: 600;
+    color: #0369a1;
+    text-decoration: underline;
+}
+
+/* ── GUEST FORM ── */
+.guestForm {
+    max-width: 500px;
+    margin: 0 auto var(--spacing-lg);
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.guestTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+}
+
+.guestFields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.guestInput {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 10px 12px;
+    font-size: var(--font-size-sm);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.guestInput:focus {
+    border-color: var(--color-primary);
 }
 
 /* ── RESPONSIVE ── */

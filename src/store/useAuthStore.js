@@ -11,11 +11,14 @@ const useAuthStore = create((set) => ({
         role: userData.role
     }),
 
-    logout: () => set({
-        user: null,
-        isAuthenticated: false,
-        role: null
-    }),
+    logout: () => {
+        localStorage.removeItem('token')
+        set({
+            user: null,
+            isAuthenticated: false,
+            role: null
+        })
+    },
 }))
 
 export default useAuthStore

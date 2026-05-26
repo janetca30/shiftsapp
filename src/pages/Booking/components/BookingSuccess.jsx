@@ -1,11 +1,16 @@
+import { Link } from 'react-router-dom'
 import styles from '../Booking.module.css'
 
-const BookingSummary = ({ booking, totalPrice, onConfirm, onEdit, loading, disableConfirm }) => {
+const BookingSuccess = ({ booking, totalPrice }) => {
     const { services, stylist, date, time } = booking
 
     return (
-        <div className={styles.summaryWrapper}>
-            <h2 className={styles.stepTitle}>Confirm your Appointment</h2>
+        <div className={styles.successWrapper}>
+            <div className={styles.successIcon}>✅</div>
+            <h2 className={styles.successTitle}>Appointment Confirmed!</h2>
+            <p className={styles.successSubtitle}>
+                We look forward to seeing you. Here's your booking summary:
+            </p>
 
             <div className={styles.summaryCard}>
                 <div className={styles.summaryRow}>
@@ -18,32 +23,22 @@ const BookingSummary = ({ booking, totalPrice, onConfirm, onEdit, loading, disab
                 </span>
                             ))}
                         </div>
-                        <button className={styles.editBtn} onClick={() => onEdit(1)}>Edit</button>
                     </div>
                 </div>
 
                 <div className={styles.summaryRow}>
                     <span className={styles.summaryLabel}>Stylist</span>
-                    <div className={styles.summaryValue}>
-                        💈 {stylist?.name}
-                        <button className={styles.editBtn} onClick={() => onEdit(2)}>Edit</button>
-                    </div>
+                    <div className={styles.summaryValue}>💈 {stylist?.name}</div>
                 </div>
 
                 <div className={styles.summaryRow}>
                     <span className={styles.summaryLabel}>Date</span>
-                    <div className={styles.summaryValue}>
-                        📅 {date?.toDateString()}
-                        <button className={styles.editBtn} onClick={() => onEdit(3)}>Edit</button>
-                    </div>
+                    <div className={styles.summaryValue}>📅 {date?.toDateString()}</div>
                 </div>
 
                 <div className={styles.summaryRow}>
                     <span className={styles.summaryLabel}>Time</span>
-                    <div className={styles.summaryValue}>
-                        🕐 {time}
-                        <button className={styles.editBtn} onClick={() => onEdit(4)}>Edit</button>
-                    </div>
+                    <div className={styles.summaryValue}>🕐 {time}</div>
                 </div>
 
                 <div className={styles.summaryRow}>
@@ -54,15 +49,16 @@ const BookingSummary = ({ booking, totalPrice, onConfirm, onEdit, loading, disab
                 </div>
             </div>
 
-            <button
-                className={styles.confirmBtn}
-                onClick={onConfirm}
-                disabled={loading || disableConfirm}
-            >
-                { loading ? 'Confirming...' : 'Confirm Appointment'}
-            </button>
+            <div className={styles.successButtons}>
+                <Link to="/" className={styles.successHomeBtn}>
+                    Back to Home
+                </Link>
+                <Link to="/booking" className={styles.successNewBtn}>
+                    Book Another
+                </Link>
+            </div>
         </div>
     )
 }
 
-export default BookingSummary
+export default BookingSuccess

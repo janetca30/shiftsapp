@@ -1,13 +1,17 @@
+import { useState, useEffect } from 'react'
 import styles from '../Booking.module.css'
 import sharedStyles from '@/styles/shared.module.css'
-
-const stylists = [
-    { id: 1, name: 'Alex Johnson', specialties: ['Haircut', 'Beard Trim', 'Shave'], rating: 4.9, shifts: 124 },
-    { id: 2, name: 'Maria Garcia', specialties: ['Hair Color', 'Hair Treatment', 'Haircut'], rating: 4.8, shifts: 98 },
-    { id: 3, name: 'Chris Lee', specialties: ['Shave', 'Beard Trim'], rating: 4.6, shifts: 45 },
-]
+import { stylistService } from '@/services/api'
 
 const StylistSelector = ({ onSelect, selected, services }) => {
+    const [stylists, setStylists] = useState([])
+
+    useEffect(() => {
+        stylistService.getAll()
+            .then((data) => setStylists(data))
+            .catch((err) => console.error(err))
+    }, [])
+
     const selectedServiceNames = services.map((s) => s.title)
 
     const canHandle = (stylist) =>
@@ -23,9 +27,9 @@ const StylistSelector = ({ onSelect, selected, services }) => {
                     const available = canHandle(stylist)
                     return (
                         <button
-                            key={stylist.id}
+                            key={stylist._id}
                             disabled={!available}
-                            className={`${styles.stylistBookingCard} ${selected?.id === stylist.id ? styles.selectedCard : ''} ${!available ? styles.unavailableStylist : ''}`}
+                            className={`${styles.stylistBookingCard} ${selected?._id === stylist._id ? styles.selectedCard : ''} ${!available ? styles.unavailableStylist : ''}`}
                             onClick={() => onSelect(stylist)}
                         >
                             <div className={styles.stylistBookingAvatar}>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuthStore from '@/store/useAuthStore'
+import { authService } from '@/services/api'
 import styles from './Login.module.css'
 
 const Login = () => {
@@ -21,16 +22,16 @@ const Login = () => {
 
         setLoading(true)
 
-        // mock login — reemplazá con tu API cuando tengas el backend
-        setTimeout(() => {
-            if (form.email === 'admin@barbershop.com' && form.password === 'admin123') {
-                login({ name: 'Admin', email: form.email, role: 'admin' })
-                navigate('/admin')
-            } else {
-                setError('Invalid email or password')
-            }
+        try {
+            const data = await authService.login(form)
+            localStorage.setItem('token', data.token)
+            login({ name: data.name, email: data.email, role: data.role })
+            navigate('/admin')
+        } catch (err) {
+            setError(err.message)
+        } finally {
             setLoading(false)
-        }, 800)
+        }
     }
 
     return (

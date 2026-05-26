@@ -1,31 +1,38 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from '../Admin.module.css'
-
-const allShifts = [
-    { id: 1, client: 'John Doe', service: 'Haircut', date: '2026-05-20', time: '9:00 AM', status: 'completed' },
-    { id: 2, client: 'Mike Smith', service: 'Beard Trim', date: '2026-05-20', time: '10:00 AM', status: 'completed' },
-    { id: 3, client: 'Carlos Rivera', service: 'Shave', date: '2026-05-20', time: '11:30 AM', status: 'pending' },
-    { id: 4, client: 'James Brown', service: 'Hair Treatment', date: '2026-05-21', time: '2:00 PM', status: 'pending' },
-    { id: 5, client: 'Lucas White', service: 'Haircut', date: '2026-05-21', time: '3:30 PM', status: 'cancelled' },
-    { id: 6, client: 'Peter Jones', service: 'Hair Color', date: '2026-05-22', time: '10:00 AM', status: 'pending' },
-]
+import { shiftService } from '@/services/api'
 
 const Shifts = () => {
+    const [shifts, setShifts] = useState([])
     const [search, setSearch] = useState('')
     const [filterStatus, setFilterStatus] = useState('all')
     const [filterDate, setFilterDate] = useState('')
 
-    const filtered = allShifts.filter((shift) => {
-        const matchSearch = shift.client.toLowerCase().includes(search.toLowerCase()) ||
-            shift.service.toLowerCase().includes(search.toLowerCase())
+    const fetchShifts = async () => {
+        const data = await shiftService.getAll()
+        setShifts(data)
+    }
+
+    useEffect(() => {
+        fetchShifts().catch((err) => console.error(err))
+    }, [])
+
+    const filtered = shifts.filter((shift) => {
+        const matchSearch =
+            shift.client?.name.toLowerCase().includes(search.toLowerCase()) ||
+            shift.service?.some((s) => s.title.toLowerCase().includes(search.toLowerCase()))
         const matchStatus = filterStatus === 'all' || shift.status === filterStatus
         const matchDate = filterDate === '' || shift.date === filterDate
         return matchSearch && matchStatus && matchDate
     })
 
-    const handleStatusChange = (id, newStatus) => {
-        console.log(`Change shift ${id} to ${newStatus}`)
-        // acá va la llamada a la API
+    const handleStatusChange = async (id, status) => {
+        try {
+            const updated = await shiftService.updateStatus(id, status)
+            setShifts((prev) => prev.map((s) => s._id === id ? updated : s))
+        } catch (error) {
+            console.error('Error updating shift:', error)
+        }
     }
 
     return (
@@ -84,11 +91,13 @@ const Shifts = () => {
                     </tr>
                 ) : (
                     filtered.map((shift) => (
-                        <tr key={shift.id}>
-                            <td>{shift.client}</td>
-                            <td>{shift.service}</td>
+                        <tr key={shift._id}>
+                            <td>{shift.client?.name}</td>
+                            <td>{shift.service?.map((s) => s.title).join(', ')}</td>
+                            <td>{shift.stylist?.name}</td>
                             <td>{shift.date}</td>
                             <td>{shift.time}</td>
+                            <td>${shift.totalPrice}</td>
                             <td>
                   <span className={`${styles.badge} ${styles[shift.status]}`}>
                     {shift.status}
@@ -99,13 +108,13 @@ const Shifts = () => {
                                     <>
                                         <button
                                             className={styles.completeBtn}
-                                            onClick={() => handleStatusChange(shift.id, 'completed')}
+                                            onClick={() => handleStatusChange(shift._id, 'completed')}
                                         >
                                             ✓ Complete
                                         </button>
                                         <button
                                             className={styles.cancelBtn}
-                                            onClick={() => handleStatusChange(shift.id, 'cancelled')}
+                                            onClick={() => handleStatusChange(shift._id, 'cancelled')}
                                         >
                                             ✕ Cancel
                                         </button>

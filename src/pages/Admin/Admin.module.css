@@ -629,6 +629,12 @@
     border-color: var(--color-primary);
 }
 
+.shiftsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
     .statsGrid {
