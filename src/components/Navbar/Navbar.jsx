@@ -39,30 +39,54 @@ const Navbar = () => {
 
                 {isAuthenticated ? (
                     <>
-                        <NavLink
-                            to="/admin"
-                            className={({ isActive }) =>
-                                isActive ? `${styles.link} ${styles.active}` : styles.link
-                            }
-                        >
-                            Admin
-                        </NavLink>
+                        {user?.role === 'admin' && (
+                            <NavLink
+                                to="/admin"
+                                className={({ isActive }) =>
+                                    isActive ? `${styles.link} ${styles.active}` : styles.link
+                                }
+                            >
+                                Admin
+                            </NavLink>
+                        )}
+
+                        {user?.role === 'client' && (
+                            <NavLink
+                                to="/my-shifts"
+                                className={({ isActive }) =>
+                                    isActive ? `${styles.link} ${styles.active}` : styles.link
+                                }
+                            >
+                                My Shifts
+                            </NavLink>
+                        )}
+
                         <div className={styles.userMenu}>
                             <span className={styles.userName}>👤 {user?.name}</span>
                             <button className={styles.logoutBtn} onClick={handleLogout}>
-                            Logout
+                                Logout
                             </button>
                         </div>
                     </>
                 ) : (
-                    <NavLink
-                        to="/login"
-                        className={({ isActive }) =>
-                            isActive ? `${styles.link} ${styles.active}` : styles.link
-                        }
-                    >
-                        Login
-                    </NavLink>
+                    <>
+                        <NavLink
+                            to="/login"
+                            className={({ isActive }) =>
+                                isActive ? `${styles.link} ${styles.active}` : styles.link
+                            }
+                        >
+                            Login
+                        </NavLink>
+                        <NavLink
+                            to="/register"
+                            className={({ isActive }) =>
+                                isActive ? `${styles.link} ${styles.active}` : styles.link
+                            }
+                        >
+                            Register
+                        </NavLink>
+                    </>
                 )}
             </nav>
         </header>

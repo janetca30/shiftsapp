@@ -1,0 +1,176 @@
+.wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+}
+
+.subtitle {
+    color: var(--color-text-muted);
+}
+
+.bookBtn {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: 12px 24px;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    text-decoration: none;
+    align-self: flex-start;
+    transition: opacity 0.2s;
+}
+
+.bookBtn:hover {
+    opacity: 0.85;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+}
+
+.empty {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--color-text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.emptyLink {
+    color: var(--color-primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.shiftsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.shiftCard {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.pastCard {
+    opacity: 0.7;
+}
+
+.shiftCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shiftDate {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.shiftInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.shiftTime,
+.shiftStylist,
+.shiftTotal {
+    font-size: var(--font-size-sm);
+}
+
+.shiftTotal {
+    font-weight: 700;
+}
+
+.shiftServices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-xs) 0;
+}
+
+.serviceBadge {
+    background: var(--color-accent);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 11px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.pending {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.cancelBtn {
+    background: #fee2e2;
+    color: #991b1b;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 8px 12px;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-weight: 500;
+}
+
+.cancelBtn:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .shiftsGrid {
+        grid-template-columns: 1fr;
+    }
+}

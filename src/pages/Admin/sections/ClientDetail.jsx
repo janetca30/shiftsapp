@@ -1,10 +1,12 @@
 import styles from '../Admin.module.css'
 
 const ClientDetail = ({ client, onBack }) => {
-    const completed = client.shifts.filter((s) => s.status === 'completed').length
-    const cancelled = client.shifts.filter((s) => s.status === 'cancelled').length
+    const shifts = client.shifts || []
 
-    const serviceCount = client.shifts.reduce((acc, shift) => {
+    const completed = shifts.filter((s) => s.status === 'completed').length
+    const cancelled = shifts.filter((s) => s.status === 'cancelled').length
+
+    const serviceCount = shifts.reduce((acc, shift) => {
         acc[shift.service] = (acc[shift.service] || 0) + 1
         return acc
     }, {})
@@ -25,14 +27,15 @@ const ClientDetail = ({ client, onBack }) => {
                 <div>
                     <h2 className={styles.clientName}>{client.name}</h2>
                     <p className={styles.clientContact}>📧 {client.email}</p>
-                    <p className={styles.clientContact}>📞 {client.phone}</p>
+                    <p className={styles.clientContact}>📞 {client.phone || '—'}</p>
+                    <p className={styles.clientContact}>📅 Joined {new Date(client.createdAt).toLocaleDateString()}</p>
                 </div>
             </div>
 
             {/* Stats */}
             <div className={styles.clientStats}>
                 <div className={styles.clientStatCard}>
-                    <span className={styles.clientStatValue}>{client.visits}</span>
+                    <span className={styles.clientStatValue}>{shifts.length}</span>
                     <span className={styles.clientStatLabel}>Total Visits</span>
                 </div>
                 <div className={styles.clientStatCard}>
@@ -51,30 +54,34 @@ const ClientDetail = ({ client, onBack }) => {
 
             {/* Shift history */}
             <h3 className={styles.sectionTitle}>Shift History</h3>
-            <table className={styles.table}>
-                <thead>
-                <tr>
-                    <th>Service</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                </tr>
-                </thead>
+            {shifts.length === 0 ? (
+                <p className={styles.noResults}>No shifts yet</p>
+            ) : (
+                <table className={styles.table}>
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
                 <tbody>
-                {client.shifts.map((shift) => (
-                    <tr key={shift.id}>
-                        <td>{shift.service}</td>
-                        <td>{shift.date}</td>
-                        <td>{shift.time}</td>
-                        <td>
-                <span className={`${styles.badge} ${styles[shift.status]}`}>
-                  {shift.status}
-                </span>
-                        </td>
-                    </tr>
-                ))}
+                    {shifts.map((shift) => (
+                        <tr key={shift._id}>
+                            <td>{shift.services?.map((s) => s.title).join(', ')}</td>
+                            <td>{shift.date}</td>
+                            <td>{shift.time}</td>
+                            <td>
+                                <span className={`${styles.badge} ${styles[shift.status]}`}>
+                                 {shift.status}
+                                </span>
+                            </td>
+                        </tr>
+                     ))}
                 </tbody>
             </table>
+            )}
         </div>
     )
 }
