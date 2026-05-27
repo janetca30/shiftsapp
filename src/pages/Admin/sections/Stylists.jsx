@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from '../Admin.module.css'
 import sharedStyles from '@/styles/shared.module.css'
 import { stylistService } from '@/services/api'
+import useUIStore from '@/store/useUIStore'
 
 const allSpecialties = ['Haircut', 'Shave', 'Beard Trim', 'Hair Treatment', 'Hair Color', 'Hair Wash']
 
@@ -18,6 +19,8 @@ const Stylists = () => {
     const [showForm, setShowForm] = useState(false)
     const [editingId, setEditingId] = useState(null)
     const [form, setForm] = useState(emptyForm)
+
+    const { showNotification } = useUIStore()
 
     const fetchStylists = async () => {
         const data = await stylistService.getAll()
@@ -69,9 +72,10 @@ const Stylists = () => {
                 const created = await stylistService.create(form)
                 setStylists((prev) => [...prev, created])
             }
+            showNotification({ type: 'success', message: editingId ? 'Stylist updated' : 'Stylist created' })
             handleClose()
         } catch (error) {
-            console.error('Error saving stylist:', error)
+            showNotification({ type: 'error', message: error.message })
         }
     }
 

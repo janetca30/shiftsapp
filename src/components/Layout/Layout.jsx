@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from '@components/Navbar/Navbar.jsx'
-import Footer from "@components/Footer/Footer.jsx";
+import Footer from '@components/Footer/Footer.jsx'
+import Notification from '@components/Notification/Notification'
 import styles from './Layout.module.css'
 
 const Layout = ()  => {
@@ -11,6 +12,7 @@ const Layout = ()  => {
                 <Outlet />
             </main>
             <Footer />
+            <Notification />
         </div>
     )
 }

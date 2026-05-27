@@ -8,10 +8,12 @@ import BookingSummary from './components/BookingSummary'
 import BookingSuccess from './components/BookingSuccess'
 import { shiftService } from '@/services/api'
 import useAuthStore from '@/store/useAuthStore'
+import useUIStore from '@/store/useUIStore'
 import styles from './Booking.module.css'
 
 const Booking = () => {
     const { isAuthenticated } = useAuthStore()
+    const { showNotification } = useUIStore()
     const [step, setStep] = useState(1)
     const [editMode, setEditMode] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -64,8 +66,9 @@ const Booking = () => {
             }
 
             setSuccess(true)
+            showNotification({ type: 'success', message: 'Appointment booked successfully!'})
             } catch (error) {
-            console.error('Error creating shift:', error)
+            showNotification({ type: 'error', message: error.message })
             } finally {
             setLoading(false)
             }

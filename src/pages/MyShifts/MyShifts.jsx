@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import useAuthStore from '@/store/useAuthStore'
+import useUIStore from '@/store/useUIStore'
 import { shiftService } from '@/services/api'
 import styles from './MyShifts.module.css'
 
 const MyShifts = () => {
     const { user } = useAuthStore()
+    const { showNotification } = useUIStore()
     const [shifts, setShifts] = useState([])
 
     useEffect(() => {
@@ -18,8 +20,9 @@ const MyShifts = () => {
         try {
             await shiftService.cancel(id)
             setShifts((prev) => prev.map((s) => s._id === id ? { ...s, status: 'cancelled' } : s))
+            showNotification({ type: 'success', message: 'Appointment cancelled' })
         } catch (error) {
-            console.error('Error cancelling shift:', error)
+            showNotification({ type: 'error', message: error.message })
         }
     }
 
